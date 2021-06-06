@@ -7,7 +7,7 @@
     display: flex;
     padding: 30px;
     overflow-y:hidden;
-    overflow-x:hidden;
+    overflow-x:scroll;
 }
 
 .posters::-webkit-scrollbar
