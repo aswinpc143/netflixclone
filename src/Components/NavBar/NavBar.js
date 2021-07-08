@@ -1,4 +1,5 @@
 import React from 'react'
+import logo from './logo/cooltext388381261994218.png'
 
 function NavBar() {
     return (
