@@ -12,26 +12,27 @@
 
 .posters::-webkit-scrollbar
 {
-    display: -moz-inline-stack;
+    display: none;
 }
 
 .poster{
     max-height: 250px;
     margin-right: 10px; 
     cursor: pointer;
+    transition: transform 0.3s ease;
 }
 
 .poster:hover{
-    transform: scale(1.5);
-    
+    transform: scale(1.1);
 }
 
 .smallPoster{
     max-height: 150px;
     margin-right: 10px; 
     cursor: pointer;
+    transition: transform 0.3s ease;
 }
 
 .smallPoster:hover{
-    transform: scale(1.5);
+    transform: scale(1.1);
 }

@@ -13,9 +13,10 @@ function RowPost(props) {
             console.log(response.data)
             setMovies(response.data.results)
         }).catch(err=>{
-            // alert("Network Error")
+            console.log("Network Error:", err)
         })
-    }, [])
+    }, [props.url])
+    
     const opts = 
     {
         height: '390',
@@ -42,8 +43,14 @@ function RowPost(props) {
         <div className='row'>
             <h2>{props.title}</h2>
             <div className='posters'> 
-            {movies.map((obj)=>
-                <img onClick={()=>handleMovie(obj.id)} className={props.isSmall ? 'smallPoster' :'poster'} alt="poster" src={`${imageUrl+obj.backdrop_path}`}/>
+            {movies.map((obj, index)=>
+                <img 
+                    key={index}
+                    onClick={()=>handleMovie(obj.id)} 
+                    className={props.isSmall ? 'smallPoster' :'poster'} 
+                    alt="poster" 
+                    src={`${imageUrl+obj.backdrop_path}`}
+                />
             )}
             </div>
         {   urlId  &&  <YouTube opts={opts} videoId={urlId.key} /> }
