@@ -6,19 +6,53 @@
     padding: 20px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     background-color: #111;
-
+    z-index: 100;
 }
 
 .logo{
-    position: fixed;
-    left: 20px;
     width: 80px;
+}
 
+.nav-user {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.user-name {
+    color: white;
+    font-size: 14px;
 }
 
 .avatar{
-    position: fixed;
-    right: 20px;
     width: 30px;
+    height: 30px;
+    border-radius: 4px;
+}
+
+.logout-btn {
+    background: #e50914;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s;
+}
+
+.logout-btn:hover {
+    background: #f40612;
+}
+
+@media (max-width: 768px) {
+    .user-name {
+        display: none;
+    }
+    
+    .nav-user {
+        gap: 10px;
+    }
 }

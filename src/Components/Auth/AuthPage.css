@@ -1,0 +1,189 @@
+.auth-page {
+  min-height: 100vh;
+  position: relative;
+}
+
+.auth-background {
+  background: linear-gradient(
+    rgba(0, 0, 0, 0.7),
+    rgba(0, 0, 0, 0.7)
+  ),
+  url('https://assets.nflxext.com/ffe/siteui/vlv3/9d3533b2-0e2b-40b2-95e0-ecd7979cc88b/a3873901-5b7c-46eb-b9fa-12fea5197bd3/IN-en-20240311-popsignuptwoweeks-perspective_alpha_website_large.jpg');
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-overlay {
+  background: rgba(0, 0, 0, 0.4);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-header {
+  padding: 20px 50px;
+}
+
+.auth-logo {
+  height: 45px;
+}
+
+.auth-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.auth-form-wrapper {
+  background: rgba(0, 0, 0, 0.75);
+  padding: 60px 68px 40px;
+  border-radius: 4px;
+  width: 100%;
+  max-width: 450px;
+  box-sizing: border-box;
+}
+
+.auth-form h1 {
+  color: white;
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 28px;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group input {
+  width: 100%;
+  height: 50px;
+  background: #333;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  padding: 16px 20px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.form-group input::placeholder {
+  color: #8c8c8c;
+}
+
+.form-group input:focus {
+  outline: none;
+  background: #454545;
+}
+
+.auth-submit-btn {
+  width: 100%;
+  height: 48px;
+  background: #e50914;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 24px;
+  transition: background-color 0.2s;
+}
+
+.auth-submit-btn:hover:not(:disabled) {
+  background: #f40612;
+}
+
+.auth-submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.auth-error {
+  background: #e87c03;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 4px;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+.auth-help {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16px;
+  font-size: 13px;
+}
+
+.remember-me {
+  display: flex;
+  align-items: center;
+  color: #b3b3b3;
+}
+
+.remember-me input {
+  margin-right: 8px;
+}
+
+.help-link {
+  color: #b3b3b3;
+  text-decoration: none;
+}
+
+.help-link:hover {
+  text-decoration: underline;
+}
+
+.auth-switch {
+  margin-top: 16px;
+  color: #737373;
+  font-size: 16px;
+}
+
+.auth-switch-btn {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  text-decoration: none;
+  margin-left: 5px;
+}
+
+.auth-switch-btn:hover {
+  text-decoration: underline;
+}
+
+.auth-terms {
+  margin-top: 16px;
+  font-size: 13px;
+  color: #737373;
+}
+
+.auth-terms a {
+  color: #737373;
+  text-decoration: none;
+}
+
+.auth-terms a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 740px) {
+  .auth-header {
+    padding: 20px 5%;
+  }
+  
+  .auth-form-wrapper {
+    padding: 48px 28px;
+    background: black;
+  }
+  
+  .auth-background {
+    background: black;
+  }
+}
