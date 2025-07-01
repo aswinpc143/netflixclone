@@ -1,0 +1,178 @@
+.my-list-container {
+  padding: 80px 20px 40px;
+  min-height: 100vh;
+  background-color: #111;
+}
+
+.my-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding: 0 20px;
+}
+
+.my-list-header h1 {
+  color: white;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.list-count {
+  color: #999;
+  font-size: 1.1rem;
+}
+
+.empty-list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+}
+
+.empty-list-content {
+  text-align: center;
+  color: white;
+}
+
+.empty-list-content h2 {
+  font-size: 2rem;
+  margin-bottom: 15px;
+  color: #e5e5e5;
+}
+
+.empty-list-content p {
+  font-size: 1.2rem;
+  color: #999;
+  max-width: 400px;
+}
+
+.my-list-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 0 20px;
+}
+
+.my-list-item {
+  position: relative;
+}
+
+.movie-card {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #222;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.movie-card:hover {
+  transform: scale(1.05);
+}
+
+.movie-poster {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+}
+
+.movie-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0,0,0,0.8), rgba(0,0,0,0.95));
+  padding: 40px 20px 20px;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+
+.movie-card:hover .movie-overlay {
+  transform: translateY(0);
+}
+
+.movie-info {
+  color: white;
+}
+
+.movie-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 0 0 10px 0;
+  line-height: 1.2;
+}
+
+.movie-overview {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin: 0 0 15px 0;
+  color: #ccc;
+}
+
+.movie-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.remove-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.remove-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.remove-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+@media (max-width: 768px) {
+  .my-list-container {
+    padding: 80px 10px 40px;
+  }
+  
+  .my-list-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 0 10px;
+  }
+  
+  .my-list-header h1 {
+    font-size: 2rem;
+  }
+  
+  .my-list-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+    padding: 0 10px;
+  }
+  
+  .movie-overlay {
+    position: static;
+    transform: none;
+    background: rgba(0,0,0,0.8);
+    padding: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .my-list-grid {
+    grid-template-columns: 1fr;
+  }
+}

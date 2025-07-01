@@ -3,6 +3,7 @@ import axios from '../../Axios'
 import './RowPost.css'
 import YouTube from 'react-youtube'
 import {API_KEY, imageUrl} from '../../Constants/Constants'
+import MovieCard from '../MovieCard/MovieCard'
 
 function RowPost(props) {
     const [movies, setMovies] = useState([])
@@ -44,12 +45,11 @@ function RowPost(props) {
             <h2>{props.title}</h2>
             <div className='posters'> 
             {movies.map((obj, index)=>
-                <img 
+                <MovieCard
                     key={index}
-                    onClick={()=>handleMovie(obj.id)} 
-                    className={props.isSmall ? 'smallPoster' :'poster'} 
-                    alt="poster" 
-                    src={`${imageUrl+obj.backdrop_path}`}
+                    movie={obj}
+                    onClick={() => handleMovie(obj.id)}
+                    className={props.isSmall ? 'smallPoster' : 'poster'}
                 />
             )}
             </div>

@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { AuthProvider, useAuth } from './context/AuthContext'
+import { MyListProvider } from './context/MyListContext'
 import AuthPage from './Components/Auth/AuthPage'
 import NavBar from './Components/NavBar/NavBar'
+import MyList from './Components/MyList/MyList'
 import "./Components/NavBar/NavBar.css"
 import './App.css'
 import {actions,originals} from './Urls'
@@ -10,6 +12,7 @@ import RowPost from './Components/RowPost/RowPost'
 
 function AppContent() {
   const { user, loading } = useAuth();
+  const [currentView, setCurrentView] = useState('home');
 
   if (loading) {
     return (
@@ -30,13 +33,25 @@ function AppContent() {
     return <AuthPage />;
   }
 
+  const handleMyListClick = () => {
+    setCurrentView(currentView === 'mylist' ? 'home' : 'mylist');
+  };
+
   return (
-    <div>
-      <NavBar/>
-      <Banner/>
-      <RowPost url={originals} title='Netflix Originals'/>
-      <RowPost url={actions} title='Actions' isSmall />
-    </div>
+    <MyListProvider>
+      <div>
+        <NavBar onMyListClick={handleMyListClick} />
+        {currentView === 'home' ? (
+          <>
+            <Banner/>
+            <RowPost url={originals} title='Netflix Originals'/>
+            <RowPost url={actions} title='Actions' isSmall />
+          </>
+        ) : (
+          <MyList />
+        )}
+      </div>
+    </MyListProvider>
   );
 }
 
