@@ -27,7 +27,6 @@ function LoginForm() {
       <h1>Sign In</h1>
       
       {error && <div className="auth-error">{error}</div>}
-      }
       
       <form onSubmit={handleSubmit}>
         <div className="form-group">

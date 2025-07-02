@@ -1,18 +1,23 @@
-import React, { useState } from 'react'
+import React from 'react'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { AuthProvider, useAuth } from './context/AuthContext'
 import { MyListProvider } from './context/MyListContext'
+import { ViewingHistoryProvider } from './context/ViewingHistoryContext'
 import AuthPage from './Components/Auth/AuthPage'
-import NavBar from './Components/NavBar/NavBar'
-import MyList from './Components/MyList/MyList'
-import "./Components/NavBar/NavBar.css"
+import Layout from './Components/Layout/Layout'
+import HomePage from './pages/HomePage/HomePage'
+import BrowsePage from './pages/BrowsePage/BrowsePage'
+import GenrePage from './pages/GenrePage/GenrePage'
+import SearchPage from './pages/SearchPage/SearchPage'
+import AccountPage from './pages/AccountPage/AccountPage'
+import ProfilePage from './pages/ProfilePage/ProfilePage'
+import ViewingHistoryPage from './pages/ViewingHistoryPage/ViewingHistoryPage'
+import HelpPage from './pages/HelpPage/HelpPage'
+import MyListPage from './pages/MyListPage/MyListPage'
 import './App.css'
-import {actions,originals} from './Urls'
-import Banner from './Components/Banner/Banner'
-import RowPost from './Components/RowPost/RowPost'
 
 function AppContent() {
   const { user, loading } = useAuth();
-  const [currentView, setCurrentView] = useState('home');
 
   if (loading) {
     return (
@@ -33,24 +38,26 @@ function AppContent() {
     return <AuthPage />;
   }
 
-  const handleMyListClick = () => {
-    setCurrentView(currentView === 'mylist' ? 'home' : 'mylist');
-  };
-
   return (
     <MyListProvider>
-      <div>
-        <NavBar onMyListClick={handleMyListClick} />
-        {currentView === 'home' ? (
-          <>
-            <Banner/>
-            <RowPost url={originals} title='Netflix Originals'/>
-            <RowPost url={actions} title='Actions' isSmall />
-          </>
-        ) : (
-          <MyList />
-        )}
-      </div>
+      <ViewingHistoryProvider>
+        <Router>
+          <Layout>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/browse" element={<BrowsePage />} />
+              <Route path="/browse/:category" element={<BrowsePage />} />
+              <Route path="/genre/:genreId" element={<GenrePage />} />
+              <Route path="/search" element={<SearchPage />} />
+              <Route path="/account" element={<AccountPage />} />
+              <Route path="/profiles" element={<ProfilePage />} />
+              <Route path="/viewing-history" element={<ViewingHistoryPage />} />
+              <Route path="/help" element={<HelpPage />} />
+              <Route path="/my-list" element={<MyListPage />} />
+            </Routes>
+          </Layout>
+        </Router>
+      </ViewingHistoryProvider>
     </MyListProvider>
   );
 }

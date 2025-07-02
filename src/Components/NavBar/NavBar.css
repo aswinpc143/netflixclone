@@ -9,6 +9,11 @@
     align-items: center;
     background-color: #111;
     z-index: 100;
+    transition: background-color 0.3s ease;
+}
+
+.navbar:hover {
+    background-color: rgba(0, 0, 0, 0.9);
 }
 
 .logo{
@@ -27,17 +32,31 @@
 }
 
 .nav-link {
-    background: none;
-    border: none;
     color: #e5e5e5;
     font-size: 14px;
-    cursor: pointer;
+    text-decoration: none;
     padding: 8px 0;
     transition: color 0.2s ease;
+    position: relative;
 }
 
 .nav-link:hover {
     color: white;
+}
+
+.nav-link.active {
+    color: white;
+    font-weight: 600;
+}
+
+.nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: #e50914;
 }
 
 .user-name {
@@ -68,7 +87,7 @@
     background: rgba(0, 0, 0, 0.9);
     border: 1px solid #333;
     border-radius: 4px;
-    min-width: 120px;
+    min-width: 160px;
     margin-top: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
@@ -83,31 +102,18 @@
     text-align: left;
     cursor: pointer;
     font-size: 14px;
+    text-decoration: none;
     transition: background-color 0.2s ease;
 }
 
 .dropdown-item:hover {
     background: rgba(255, 255, 255, 0.1);
+    color: white;
 }
 
 .logout-item {
     border-top: 1px solid #333;
     color: #e50914;
-}
-
-.logout-btn {
-    background: #e50914;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: background-color 0.2s;
-}
-
-.logout-btn:hover {
-    background: #f40612;
 }
 
 @media (max-width: 768px) {

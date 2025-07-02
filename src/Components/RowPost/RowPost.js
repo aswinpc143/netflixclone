@@ -4,10 +4,12 @@ import './RowPost.css'
 import YouTube from 'react-youtube'
 import {API_KEY, imageUrl} from '../../Constants/Constants'
 import MovieCard from '../MovieCard/MovieCard'
+import { useViewingHistory } from '../../context/ViewingHistoryContext'
 
 function RowPost(props) {
     const [movies, setMovies] = useState([])
     const [urlId, setUrlId] = useState('')
+    const { addToHistory } = useViewingHistory();
 
     useEffect(() => {
         axios.get(props.url).then(response=>{
@@ -29,9 +31,12 @@ function RowPost(props) {
         },
     };
 
-    const handleMovie = (id)=>{
-        console.log(id)
-        axios.get(`/movie/${id}/videos?api_key=${API_KEY}&language=en-US`).then(response=>{
+    const handleMovie = (movie)=>{
+        console.log(movie.id)
+        // Add to viewing history when user clicks to watch
+        addToHistory(movie);
+        
+        axios.get(`/movie/${movie.id}/videos?api_key=${API_KEY}&language=en-US`).then(response=>{
            if(response.data.results.length!==0){
                setUrlId(response.data.results[0])
            }
@@ -48,7 +53,7 @@ function RowPost(props) {
                 <MovieCard
                     key={index}
                     movie={obj}
-                    onClick={() => handleMovie(obj.id)}
+                    onClick={() => handleMovie(obj)}
                     className={props.isSmall ? 'smallPoster' : 'poster'}
                 />
             )}

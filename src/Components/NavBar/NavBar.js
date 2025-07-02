@@ -1,27 +1,55 @@
 import React, { useState } from 'react'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 
-function NavBar({ onMyListClick }) {
+function NavBar() {
     const { user, logout } = useAuth();
     const [showMenu, setShowMenu] = useState(false);
+    const navigate = useNavigate();
+    const location = useLocation();
 
     const handleLogout = () => {
         logout();
+        setShowMenu(false);
+    };
+
+    const isActive = (path) => {
+        return location.pathname === path;
     };
 
     return (
         <div className="navbar">
-            <img className="logo" src={require('./cooltext388381261994218.png')} alt='netflix-logo'/>
+            <Link to="/">
+                <img className="logo" src={require('./cooltext388381261994218.png')} alt='netflix-logo'/>
+            </Link>
             
             {user && (
                 <div className="nav-user">
                     <nav className="nav-links">
-                        <button className="nav-link" onClick={() => window.location.reload()}>
+                        <Link 
+                            to="/" 
+                            className={`nav-link ${isActive('/') ? 'active' : ''}`}
+                        >
                             Home
-                        </button>
-                        <button className="nav-link" onClick={onMyListClick}>
+                        </Link>
+                        <Link 
+                            to="/browse" 
+                            className={`nav-link ${isActive('/browse') ? 'active' : ''}`}
+                        >
+                            Browse
+                        </Link>
+                        <Link 
+                            to="/my-list" 
+                            className={`nav-link ${isActive('/my-list') ? 'active' : ''}`}
+                        >
                             My List
-                        </button>
+                        </Link>
+                        <Link 
+                            to="/search" 
+                            className={`nav-link ${isActive('/search') ? 'active' : ''}`}
+                        >
+                            Search
+                        </Link>
                     </nav>
                     <span className="user-name">Welcome, {user.name}</span>
                     <div className="user-menu">
@@ -33,9 +61,34 @@ function NavBar({ onMyListClick }) {
                         />
                         {showMenu && (
                             <div className="dropdown-menu">
-                                <button className="dropdown-item" onClick={onMyListClick}>
-                                    My List
-                                </button>
+                                <Link 
+                                    to="/profiles" 
+                                    className="dropdown-item"
+                                    onClick={() => setShowMenu(false)}
+                                >
+                                    Manage Profiles
+                                </Link>
+                                <Link 
+                                    to="/account" 
+                                    className="dropdown-item"
+                                    onClick={() => setShowMenu(false)}
+                                >
+                                    Account
+                                </Link>
+                                <Link 
+                                    to="/viewing-history" 
+                                    className="dropdown-item"
+                                    onClick={() => setShowMenu(false)}
+                                >
+                                    Viewing History
+                                </Link>
+                                <Link 
+                                    to="/help" 
+                                    className="dropdown-item"
+                                    onClick={() => setShowMenu(false)}
+                                >
+                                    Help Center
+                                </Link>
                                 <button className="dropdown-item logout-item" onClick={handleLogout}>
                                     Sign Out
                                 </button>
