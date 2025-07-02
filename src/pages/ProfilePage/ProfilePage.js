@@ -108,6 +108,7 @@ function ProfilePage() {
                 }}
               />
               {profile.isKids && <span className="kids-badge">KIDS</span>}
+              }
             </div>
             <h3 className="profile-name">{profile.name}</h3>
             <div className="profile-actions">
