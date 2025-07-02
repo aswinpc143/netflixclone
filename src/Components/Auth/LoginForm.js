@@ -65,7 +65,7 @@ function LoginForm() {
           <input type="checkbox" id="remember" />
           <label htmlFor="remember">Remember me</label>
         </div>
-        <a href="#" className="help-link">Need help?</a>
+        <a href="/Need-help" className="help-link">Need help?</a>
       </div>
     </div>
   );
