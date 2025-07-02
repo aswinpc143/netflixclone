@@ -49,6 +49,7 @@ function SignupForm() {
       <h1>Sign Up</h1>
       
       {error && <div className="auth-error">{error}</div>}
+      }
       
       <form onSubmit={handleSubmit}>
         <div className="form-group">
