@@ -45,6 +45,8 @@
 .profile-avatar-container {
   position: relative;
   margin-bottom: 15px;
+  display: flex;
+  justify-content: center;
 }
 
 .profile-avatar {
@@ -53,12 +55,13 @@
   border-radius: 8px;
   object-fit: cover;
   border: 3px solid rgba(255, 255, 255, 0.2);
+  display: block;
 }
 
 .kids-badge {
   position: absolute;
   top: -5px;
-  right: -5px;
+  right: calc(50% - 55px);
   background: #46d369;
   color: white;
   font-size: 10px;
@@ -196,25 +199,30 @@
 .avatar-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
+  gap: 15px;
   margin-bottom: 25px;
+  justify-items: center;
 }
 
 .avatar-option {
-  width: 60px;
-  height: 60px;
-  border-radius: 6px;
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
   cursor: pointer;
-  border: 2px solid transparent;
-  transition: border-color 0.2s ease;
+  border: 3px solid transparent;
+  transition: all 0.2s ease;
+  object-fit: cover;
+  display: block;
 }
 
 .avatar-option:hover {
   border-color: rgba(255, 255, 255, 0.5);
+  transform: scale(1.05);
 }
 
 .avatar-option.selected {
   border-color: #e50914;
+  transform: scale(1.1);
 }
 
 .profile-form .form-group {
@@ -237,6 +245,7 @@
   color: white;
   font-size: 14px;
   transition: all 0.2s ease;
+  box-sizing: border-box;
 }
 
 .profile-form input:focus {
@@ -267,6 +276,7 @@
   margin-top: 2px;
   width: 18px;
   height: 18px;
+  flex-shrink: 0;
 }
 
 .modal-actions {
@@ -329,6 +339,10 @@
     height: 80px;
   }
   
+  .kids-badge {
+    right: calc(50% - 45px);
+  }
+  
   .profile-modal {
     padding: 20px;
     width: 95%;
@@ -336,10 +350,38 @@
   
   .avatar-grid {
     grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
   }
   
   .avatar-option {
-    width: 50px;
-    height: 50px;
+    width: 70px;
+    height: 70px;
+  }
+}
+
+@media (max-width: 480px) {
+  .profiles-grid {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 15px;
+  }
+  
+  .profile-avatar {
+    width: 70px;
+    height: 70px;
+  }
+  
+  .kids-badge {
+    right: calc(50% - 40px);
+    font-size: 9px;
+    padding: 1px 4px;
+  }
+  
+  .avatar-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .avatar-option {
+    width: 60px;
+    height: 60px;
   }
 }

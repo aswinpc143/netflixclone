@@ -33,7 +33,11 @@ function ProfilePage() {
     'https://i.pinimg.com/originals/0d/dc/ca/0ddccae723d85a703b798a5e682c23c1.png',
     'https://i.pinimg.com/564x/1b/a2/e6/1ba2e6d1d4874546c70c91f1024e17fb.jpg',
     'https://i.pinimg.com/564x/8b/3f/6b/8b3f6b8c8f8e8c8f8e8c8f8e8c8f8e8c.jpg',
-    'https://i.pinimg.com/564x/2c/4e/6a/2c4e6a8f8e8c8f8e8c8f8e8c8f8e8c8f.jpg'
+    'https://i.pinimg.com/564x/2c/4e/6a/2c4e6a8f8e8c8f8e8c8f8e8c8f8e8c8f.jpg',
+    'https://i.pinimg.com/564x/5b/50/e7/5b50e75ab64dcc32b85bc99602a2fa70.jpg',
+    'https://i.pinimg.com/564x/f3/32/19/f332192b2090f437ca9f49c1002287b6.jpg',
+    'https://i.pinimg.com/564x/a6/58/32/a65832155622ac173337874f02b218fb.jpg',
+    'https://i.pinimg.com/564x/3d/47/4f/3d474f82ff71595e8081f9a618dcfd87.jpg'
   ];
 
   const handleAddProfile = () => {
@@ -78,6 +82,12 @@ function ProfilePage() {
     }
   };
 
+  const closeModal = () => {
+    setShowAddProfile(false);
+    setEditingProfile(null);
+    setNewProfile({ name: '', isKids: false, avatar: avatarOptions[0] });
+  };
+
   return (
     <div className="profile-page">
       <div className="profile-header">
@@ -89,7 +99,14 @@ function ProfilePage() {
         {profiles.map(profile => (
           <div key={profile.id} className="profile-card">
             <div className="profile-avatar-container">
-              <img src={profile.avatar} alt={profile.name} className="profile-avatar" />
+              <img 
+                src={profile.avatar} 
+                alt={profile.name} 
+                className="profile-avatar"
+                onError={(e) => {
+                  e.target.src = 'https://i.pinimg.com/originals/0d/dc/ca/0ddccae723d85a703b798a5e682c23c1.png';
+                }}
+              />
               {profile.isKids && <span className="kids-badge">KIDS</span>}
             </div>
             <h3 className="profile-name">{profile.name}</h3>
@@ -125,8 +142,8 @@ function ProfilePage() {
       </div>
 
       {(showAddProfile || editingProfile) && (
-        <div className="profile-modal-overlay">
-          <div className="profile-modal">
+        <div className="profile-modal-overlay" onClick={closeModal}>
+          <div className="profile-modal" onClick={(e) => e.stopPropagation()}>
             <h2>{editingProfile ? 'Edit Profile' : 'Add Profile'}</h2>
             
             <div className="modal-content">
@@ -140,6 +157,9 @@ function ProfilePage() {
                       alt={`Avatar ${index + 1}`}
                       className={`avatar-option ${newProfile.avatar === avatar ? 'selected' : ''}`}
                       onClick={() => setNewProfile({ ...newProfile, avatar })}
+                      onError={(e) => {
+                        e.target.src = 'https://i.pinimg.com/originals/0d/dc/ca/0ddccae723d85a703b798a5e682c23c1.png';
+                      }}
                     />
                   ))}
                 </div>
@@ -165,7 +185,6 @@ function ProfilePage() {
                       checked={newProfile.isKids}
                       onChange={(e) => setNewProfile({ ...newProfile, isKids: e.target.checked })}
                     />
-                    <span className="checkmark"></span>
                     Kids Profile (Only shows content suitable for children)
                   </label>
                 </div>
@@ -175,11 +194,7 @@ function ProfilePage() {
             <div className="modal-actions">
               <button 
                 className="cancel-btn"
-                onClick={() => {
-                  setShowAddProfile(false);
-                  setEditingProfile(null);
-                  setNewProfile({ name: '', isKids: false, avatar: avatarOptions[0] });
-                }}
+                onClick={closeModal}
               >
                 Cancel
               </button>
