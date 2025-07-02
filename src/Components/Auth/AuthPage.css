@@ -27,8 +27,25 @@
   padding: 20px 50px;
 }
 
-.auth-logo {
-  height: 45px;
+.auth-logo-container {
+  display: inline-block;
+}
+
+.auth-logo-text {
+  font-size: 2.2rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, #e50914, #f40612);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.auth-logo-text:hover {
+  transform: scale(1.05);
 }
 
 .auth-container {
@@ -42,10 +59,12 @@
 .auth-form-wrapper {
   background: rgba(0, 0, 0, 0.75);
   padding: 60px 68px 40px;
-  border-radius: 4px;
+  border-radius: 8px;
   width: 100%;
   max-width: 450px;
   box-sizing: border-box;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .auth-form h1 {
@@ -62,13 +81,14 @@
 .form-group input {
   width: 100%;
   height: 50px;
-  background: #333;
-  border: none;
-  border-radius: 4px;
+  background: rgba(51, 51, 51, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
   color: white;
   padding: 16px 20px;
   font-size: 16px;
   box-sizing: border-box;
+  transition: all 0.2s ease;
 }
 
 .form-group input::placeholder {
@@ -77,7 +97,8 @@
 
 .form-group input:focus {
   outline: none;
-  background: #454545;
+  background: rgba(51, 51, 51, 0.9);
+  border-color: #e50914;
 }
 
 .auth-submit-btn {
@@ -85,17 +106,18 @@
   height: 48px;
   background: #e50914;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   color: white;
   font-size: 16px;
   font-weight: 700;
   cursor: pointer;
   margin-top: 24px;
-  transition: background-color 0.2s;
+  transition: all 0.2s ease;
 }
 
 .auth-submit-btn:hover:not(:disabled) {
   background: #f40612;
+  transform: translateY(-1px);
 }
 
 .auth-submit-btn:disabled {
@@ -104,12 +126,13 @@
 }
 
 .auth-error {
-  background: #e87c03;
+  background: rgba(232, 124, 3, 0.9);
   color: white;
-  padding: 10px 20px;
-  border-radius: 4px;
+  padding: 12px 20px;
+  border-radius: 6px;
   margin-bottom: 16px;
   font-size: 14px;
+  border: 1px solid rgba(232, 124, 3, 0.3);
 }
 
 .auth-help {
@@ -128,15 +151,19 @@
 
 .remember-me input {
   margin-right: 8px;
+  width: 16px;
+  height: 16px;
 }
 
 .help-link {
   color: #b3b3b3;
   text-decoration: none;
+  transition: color 0.2s ease;
 }
 
 .help-link:hover {
   text-decoration: underline;
+  color: white;
 }
 
 .auth-switch {
@@ -152,25 +179,31 @@
   cursor: pointer;
   text-decoration: none;
   margin-left: 5px;
+  font-weight: 600;
+  transition: color 0.2s ease;
 }
 
 .auth-switch-btn:hover {
   text-decoration: underline;
+  color: #e50914;
 }
 
 .auth-terms {
   margin-top: 16px;
   font-size: 13px;
   color: #737373;
+  line-height: 1.4;
 }
 
 .auth-terms a {
   color: #737373;
   text-decoration: none;
+  transition: color 0.2s ease;
 }
 
 .auth-terms a:hover {
   text-decoration: underline;
+  color: white;
 }
 
 @media (max-width: 740px) {
@@ -178,12 +211,47 @@
     padding: 20px 5%;
   }
   
+  .auth-logo-text {
+    font-size: 1.8rem;
+  }
+  
   .auth-form-wrapper {
     padding: 48px 28px;
-    background: black;
+    background: rgba(0, 0, 0, 0.85);
+    margin: 0 10px;
   }
   
   .auth-background {
-    background: black;
+    background: linear-gradient(
+      rgba(0, 0, 0, 0.8),
+      rgba(0, 0, 0, 0.8)
+    ),
+    url('https://assets.nflxext.com/ffe/siteui/vlv3/9d3533b2-0e2b-40b2-95e0-ecd7979cc88b/a3873901-5b7c-46eb-b9fa-12fea5197bd3/IN-en-20240311-popsignuptwoweeks-perspective_alpha_website_large.jpg');
+    background-size: cover;
+    background-position: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .auth-logo-text {
+    font-size: 1.5rem;
+  }
+  
+  .auth-form-wrapper {
+    padding: 40px 20px;
+  }
+  
+  .auth-form h1 {
+    font-size: 28px;
+  }
+  
+  .form-group input {
+    height: 45px;
+    font-size: 14px;
+  }
+  
+  .auth-submit-btn {
+    height: 45px;
+    font-size: 14px;
   }
 }

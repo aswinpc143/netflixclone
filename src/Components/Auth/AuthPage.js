@@ -11,11 +11,9 @@ function AuthPage() {
       <div className="auth-background">
         <div className="auth-overlay">
           <div className="auth-header">
-            <img 
-              className="auth-logo" 
-              src={require('../NavBar/cooltext388381261994218.png')} 
-              alt='netflix-logo'
-            />
+            <div className="auth-logo-container">
+              <span className="auth-logo-text">MALLUFLIX</span>
+            </div>
           </div>
           
           <div className="auth-container">
@@ -25,7 +23,7 @@ function AuthPage() {
               <div className="auth-switch">
                 {isLogin ? (
                   <p>
-                    New to Netflix? 
+                    New to Malluflix? 
                     <button 
                       className="auth-switch-btn"
                       onClick={() => setIsLogin(false)}
