@@ -4,7 +4,7 @@ import { imageUrl } from '../../Constants/Constants';
 import './ViewingHistoryPage.css';
 
 function ViewingHistoryPage() {
-  const { viewingHistory, clearHistory, removeFromHistory } = useViewingHistory();
+  const { viewingHistory, clearHistory, removeFromHistory, loading } = useViewingHistory();
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -20,7 +20,7 @@ function ViewingHistoryPage() {
   const groupByDate = (history) => {
     const groups = {};
     history.forEach(item => {
-      const date = new Date(item.watchedAt).toDateString();
+      const date = new Date(item.watched_at).toDateString();
       if (!groups[date]) {
         groups[date] = [];
       }
@@ -30,6 +30,21 @@ function ViewingHistoryPage() {
   };
 
   const groupedHistory = groupByDate(viewingHistory);
+
+  if (loading) {
+    return (
+      <div className="viewing-history-page">
+        <div className="history-header">
+          <h1>Viewing History</h1>
+        </div>
+        <div className="empty-history">
+          <div className="empty-history-content">
+            <h2>Loading your viewing history...</h2>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (viewingHistory.length === 0) {
     return (
@@ -77,13 +92,13 @@ function ViewingHistoryPage() {
               
               <div className="history-items">
                 {items
-                  .sort((a, b) => new Date(b.watchedAt) - new Date(a.watchedAt))
+                  .sort((a, b) => new Date(b.watched_at) - new Date(a.watched_at))
                   .map((item, index) => (
                     <div key={index} className="history-item">
                       <div className="item-poster">
                         <img
                           src={`${imageUrl}${item.backdrop_path || item.poster_path}`}
-                          alt={item.title || item.name}
+                          alt={item.title}
                           className="poster-image"
                         />
                         <div className="play-overlay">
@@ -94,7 +109,7 @@ function ViewingHistoryPage() {
                       </div>
                       
                       <div className="item-info">
-                        <h3 className="item-title">{item.title || item.name}</h3>
+                        <h3 className="item-title">{item.title}</h3>
                         <p className="item-overview">
                           {item.overview ? 
                             (item.overview.length > 120 ? 
@@ -105,7 +120,7 @@ function ViewingHistoryPage() {
                           }
                         </p>
                         <div className="item-meta">
-                          <span className="watch-time">Watched {formatDate(item.watchedAt)}</span>
+                          <span className="watch-time">Watched {formatDate(item.watched_at)}</span>
                           {item.progress && (
                             <span className="progress">Progress: {Math.round(item.progress)}%</span>
                           )}
@@ -115,7 +130,7 @@ function ViewingHistoryPage() {
                       <div className="item-actions">
                         <button 
                           className="remove-btn"
-                          onClick={() => removeFromHistory(item.id, item.watchedAt)}
+                          onClick={() => removeFromHistory(item.movie_id, item.watched_at)}
                           title="Remove from history"
                         >
                           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">

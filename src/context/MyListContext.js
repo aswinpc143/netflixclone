@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useAuth } from './AuthContext';
+import { supabase } from '../lib/supabase';
 
 const MyListContext = createContext();
 
@@ -13,49 +14,110 @@ export const useMyList = () => {
 
 export const MyListProvider = ({ children }) => {
   const [myList, setMyList] = useState([]);
+  const [loading, setLoading] = useState(false);
   const { user } = useAuth();
 
   useEffect(() => {
     if (user) {
-      // Load user's list from localStorage
-      const savedList = localStorage.getItem(`myList_${user.id}`);
-      if (savedList) {
-        setMyList(JSON.parse(savedList));
-      }
+      fetchMyList();
     } else {
-      // Clear list when user logs out
       setMyList([]);
     }
   }, [user]);
 
-  const addToMyList = (movie) => {
+  const fetchMyList = async () => {
     if (!user) return;
-    
-    const isAlreadyInList = myList.some(item => item.id === movie.id);
-    if (isAlreadyInList) return;
 
-    const updatedList = [...myList, movie];
-    setMyList(updatedList);
-    localStorage.setItem(`myList_${user.id}`, JSON.stringify(updatedList));
+    setLoading(true);
+    try {
+      const { data, error } = await supabase
+        .from('my_list')
+        .select('*')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error('Error fetching my list:', error);
+        return;
+      }
+
+      setMyList(data || []);
+    } catch (err) {
+      console.error('Error in fetchMyList:', err);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const removeFromMyList = (movieId) => {
+  const addToMyList = async (movie) => {
     if (!user) return;
     
-    const updatedList = myList.filter(item => item.id !== movieId);
-    setMyList(updatedList);
-    localStorage.setItem(`myList_${user.id}`, JSON.stringify(updatedList));
+    const isAlreadyInList = myList.some(item => item.movie_id === movie.id);
+    if (isAlreadyInList) return;
+
+    try {
+      const listItem = {
+        user_id: user.id,
+        movie_id: movie.id,
+        title: movie.title || movie.name,
+        overview: movie.overview,
+        poster_path: movie.poster_path,
+        backdrop_path: movie.backdrop_path,
+        release_date: movie.release_date || movie.first_air_date,
+        vote_average: movie.vote_average,
+        media_type: movie.media_type || 'movie',
+        created_at: new Date().toISOString()
+      };
+
+      const { data, error } = await supabase
+        .from('my_list')
+        .insert([listItem])
+        .select()
+        .single();
+
+      if (error) {
+        console.error('Error adding to my list:', error);
+        return;
+      }
+
+      setMyList(prev => [data, ...prev]);
+    } catch (err) {
+      console.error('Error in addToMyList:', err);
+    }
+  };
+
+  const removeFromMyList = async (movieId) => {
+    if (!user) return;
+    
+    try {
+      const { error } = await supabase
+        .from('my_list')
+        .delete()
+        .eq('user_id', user.id)
+        .eq('movie_id', movieId);
+
+      if (error) {
+        console.error('Error removing from my list:', error);
+        return;
+      }
+
+      setMyList(prev => prev.filter(item => item.movie_id !== movieId));
+    } catch (err) {
+      console.error('Error in removeFromMyList:', err);
+    }
   };
 
   const isInMyList = (movieId) => {
-    return myList.some(item => item.id === movieId);
+    return myList.some(item => item.movie_id === movieId);
   };
 
   const value = {
     myList,
     addToMyList,
     removeFromMyList,
-    isInMyList
+    isInMyList,
+    loading,
+    refreshMyList: fetchMyList
   };
 
   return (

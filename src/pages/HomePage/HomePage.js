@@ -103,11 +103,11 @@ function HomePage() {
                 <div key={index} className="continue-item">
                   <img
                     src={`${imageUrl}${item.backdrop_path || item.poster_path}`}
-                    alt={item.title || item.name}
+                    alt={item.title}
                     className="continue-poster"
                   />
                   <div className="continue-info">
-                    <div className="continue-title">{item.title || item.name}</div>
+                    <div className="continue-title">{item.title}</div>
                     <div className="continue-progress">
                       <div 
                         className="progress-bar" 

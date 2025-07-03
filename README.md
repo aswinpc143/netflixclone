@@ -1,70 +1,145 @@
-# Getting Started with Create React App
+# Netflix Clone with Supabase Backend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A full-featured Netflix clone built with React and Supabase, featuring user authentication, movie browsing, personal lists, and viewing history.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+### 🎬 Core Features
+- **User Authentication** - Sign up, login, and logout with Supabase Auth
+- **Movie Browsing** - Browse movies by genre, trending, and categories
+- **Search Functionality** - Search for movies, TV shows, and actors
+- **My List** - Save movies to personal watchlist
+- **Viewing History** - Track watched movies with progress
+- **User Profiles** - Manage user profiles and preferences
+- **Responsive Design** - Optimized for all devices
 
-### `npm start`
+### 🔧 Technical Features
+- **Real-time Data** - Supabase real-time subscriptions
+- **Secure Backend** - Row Level Security (RLS) policies
+- **Modern UI** - Netflix-inspired design with smooth animations
+- **TMDB Integration** - Real movie data from The Movie Database
+- **YouTube Trailers** - Integrated trailer playback
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Tech Stack
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- **Frontend**: React 17, React Router, Context API
+- **Backend**: Supabase (PostgreSQL, Auth, Real-time)
+- **Styling**: CSS3 with responsive design
+- **APIs**: TMDB (The Movie Database), YouTube
+- **Deployment**: Netlify
 
-### `npm test`
+## Getting Started
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Prerequisites
+- Node.js 14+ 
+- Supabase account
+- TMDB API key
 
-### `npm run build`
+### Installation
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd netflix-clone
+   ```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+3. **Set up Supabase**
+   - Create a new project at [supabase.com](https://supabase.com)
+   - Copy your project URL and anon key
+   - Run the migration script in the Supabase SQL editor:
+     ```sql
+     -- Copy and paste the content from supabase/migrations/001_initial_schema.sql
+     ```
 
-### `npm run eject`
+4. **Environment Variables**
+   - Copy `.env.example` to `.env`
+   - Add your Supabase credentials:
+     ```env
+     REACT_APP_SUPABASE_URL=your_supabase_project_url
+     REACT_APP_SUPABASE_ANON_KEY=your_supabase_anon_key
+     REACT_APP_TMDB_API_KEY=your_tmdb_api_key
+     ```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+5. **Start the development server**
+   ```bash
+   npm start
+   ```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Database Schema
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Tables
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+#### `profiles`
+- User profile information
+- Links to Supabase Auth users
+- Stores name, email, avatar
 
-## Learn More
+#### `my_list`
+- User's saved movies/shows
+- References TMDB movie IDs
+- Stores movie metadata for offline access
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+#### `viewing_history`
+- Track watched content
+- Progress tracking (0-100%)
+- Chronological viewing data
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+#### `user_preferences`
+- User settings and preferences
+- Language, autoplay, notifications
 
-### Code Splitting
+## API Integration
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### TMDB (The Movie Database)
+- Movie and TV show data
+- Search functionality
+- Genre information
+- Movie trailers
 
-### Analyzing the Bundle Size
+### YouTube
+- Trailer playback
+- Embedded video player
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Security
 
-### Making a Progressive Web App
+- **Row Level Security (RLS)** - Users can only access their own data
+- **Authentication** - Supabase Auth with email/password
+- **Data Validation** - Input validation and sanitization
+- **Secure API Keys** - Environment variables for sensitive data
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Deployment
 
-### Advanced Configuration
+The app is configured for easy deployment on Netlify:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+1. **Build the project**
+   ```bash
+   npm run build
+   ```
 
-### Deployment
+2. **Deploy to Netlify**
+   - Connect your repository to Netlify
+   - Set environment variables in Netlify dashboard
+   - Deploy automatically on push to main branch
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## Contributing
 
-### `npm run build` fails to minify
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Acknowledgments
+
+- [The Movie Database (TMDB)](https://www.themoviedb.org/) for movie data
+- [Supabase](https://supabase.com/) for backend services
+- [Netflix](https://netflix.com/) for design inspiration

@@ -4,7 +4,22 @@ import { imageUrl } from '../../Constants/Constants';
 import './MyList.css';
 
 function MyList() {
-  const { myList, removeFromMyList } = useMyList();
+  const { myList, removeFromMyList, loading } = useMyList();
+
+  if (loading) {
+    return (
+      <div className="my-list-container">
+        <div className="my-list-header">
+          <h1>My List</h1>
+        </div>
+        <div className="empty-list">
+          <div className="empty-list-content">
+            <h2>Loading your list...</h2>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (myList.length === 0) {
     return (
@@ -30,22 +45,22 @@ function MyList() {
       </div>
       
       <div className="my-list-grid">
-        {myList.map((movie) => (
-          <div key={movie.id} className="my-list-item">
+        {myList.map((item) => (
+          <div key={item.id} className="my-list-item">
             <div className="movie-card">
               <img 
-                src={`${imageUrl}${movie.backdrop_path || movie.poster_path}`}
-                alt={movie.title || movie.name}
+                src={`${imageUrl}${item.backdrop_path || item.poster_path}`}
+                alt={item.title}
                 className="movie-poster"
               />
               <div className="movie-overlay">
                 <div className="movie-info">
-                  <h3 className="movie-title">{movie.title || movie.name}</h3>
+                  <h3 className="movie-title">{item.title}</h3>
                   <p className="movie-overview">
-                    {movie.overview ? 
-                      (movie.overview.length > 150 ? 
-                        movie.overview.substring(0, 150) + '...' : 
-                        movie.overview
+                    {item.overview ? 
+                      (item.overview.length > 150 ? 
+                        item.overview.substring(0, 150) + '...' : 
+                        item.overview
                       ) : 
                       'No description available'
                     }
@@ -53,7 +68,7 @@ function MyList() {
                   <div className="movie-actions">
                     <button 
                       className="remove-btn"
-                      onClick={() => removeFromMyList(movie.id)}
+                      onClick={() => removeFromMyList(item.movie_id)}
                       title="Remove from My List"
                     >
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
