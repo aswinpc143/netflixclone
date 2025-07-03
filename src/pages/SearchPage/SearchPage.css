@@ -41,6 +41,7 @@
   color: white;
   font-size: 16px;
   transition: all 0.2s ease;
+  box-sizing: border-box;
 }
 
 .search-input:focus {
@@ -68,6 +69,7 @@
   cursor: pointer;
   transition: all 0.2s ease;
   font-size: 14px;
+  white-space: nowrap;
 }
 
 .filter-btn:hover {
@@ -119,13 +121,14 @@
 
 .results-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 20px;
 }
 
 .search-movie-card {
   border-radius: 8px;
   overflow: hidden;
+  height: 320px;
 }
 
 .person-card {
@@ -134,6 +137,7 @@
   overflow: hidden;
   transition: transform 0.2s ease;
   cursor: pointer;
+  height: 320px;
 }
 
 .person-card:hover {
@@ -189,6 +193,7 @@
   font-size: 14px;
   font-weight: 600;
   transition: transform 0.2s ease;
+  white-space: nowrap;
 }
 
 .suggestion-btn:hover {
@@ -206,6 +211,32 @@
   text-align: center;
 }
 
+/* Tablet styles */
+@media (max-width: 1024px) {
+  .search-page {
+    padding: 15px;
+  }
+  
+  .search-header h1 {
+    font-size: 2.2rem;
+  }
+  
+  .results-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+  }
+  
+  .search-movie-card,
+  .person-card {
+    height: 280px;
+  }
+  
+  .person-image {
+    height: 210px;
+  }
+}
+
+/* Mobile landscape */
 @media (max-width: 768px) {
   .search-page {
     padding: 10px;
@@ -215,9 +246,42 @@
     font-size: 2rem;
   }
   
+  .search-input {
+    font-size: 14px;
+    padding: 12px 12px 12px 45px;
+  }
+  
+  .search-filters {
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+  }
+  
+  .search-filters::-webkit-scrollbar {
+    height: 4px;
+  }
+  
+  .search-filters::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+  }
+  
+  .search-filters::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 2px;
+  }
+  
   .results-grid {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 15px;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 12px;
+  }
+  
+  .search-movie-card,
+  .person-card {
+    height: 240px;
+  }
+  
+  .person-image {
+    height: 180px;
   }
   
   .suggestions-grid {
@@ -227,5 +291,89 @@
   .suggestion-btn {
     padding: 10px 20px;
     font-size: 12px;
+  }
+}
+
+/* Mobile portrait */
+@media (max-width: 480px) {
+  .search-page {
+    padding: 8px;
+  }
+  
+  .search-header {
+    margin-bottom: 30px;
+  }
+  
+  .search-header h1 {
+    font-size: 1.8rem;
+  }
+  
+  .search-input {
+    padding: 10px 10px 10px 40px;
+    font-size: 13px;
+  }
+  
+  .filter-btn {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+  
+  .results-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 10px;
+  }
+  
+  .search-movie-card,
+  .person-card {
+    height: 200px;
+  }
+  
+  .person-image {
+    height: 150px;
+  }
+  
+  .person-info {
+    padding: 10px;
+  }
+  
+  .person-info h3 {
+    font-size: 1rem;
+  }
+  
+  .person-info p {
+    font-size: 0.8rem;
+  }
+}
+
+/* Small mobile devices */
+@media (max-width: 360px) {
+  .search-header h1 {
+    font-size: 1.6rem;
+  }
+  
+  .results-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 8px;
+  }
+  
+  .search-movie-card,
+  .person-card {
+    height: 180px;
+  }
+  
+  .person-image {
+    height: 130px;
+  }
+  
+  .person-info {
+    padding: 8px;
+  }
+  
+  .person-info h3 {
+    font-size: 0.9rem;
+  }
+  
+  .person-info p {
+    font-size: 0.7rem;
   }
 }

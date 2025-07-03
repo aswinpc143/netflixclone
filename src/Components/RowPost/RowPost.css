@@ -17,7 +17,7 @@
     overflow-y: hidden;
     overflow-x: scroll;
     scroll-behavior: smooth;
-    gap: 10px;
+    gap: 12px;
 }
 
 .posters::-webkit-scrollbar {
@@ -39,8 +39,8 @@
 }
 
 .poster{
-    max-height: 250px;
-    min-width: 200px;
+    height: 280px;
+    width: 200px;
     cursor: pointer;
     transition: transform 0.3s ease;
     border-radius: 6px;
@@ -54,8 +54,8 @@
 }
 
 .smallPoster{
-    max-height: 150px;
-    min-width: 120px;
+    height: 200px;
+    width: 140px;
     cursor: pointer;
     transition: transform 0.3s ease;
     border-radius: 6px;
@@ -118,23 +118,54 @@
     position: relative;
 }
 
+/* Tablet styles */
+@media (max-width: 1024px) {
+    .row {
+        margin-left: 15px;
+    }
+    
+    .row h2 {
+        font-size: 1.6rem;
+    }
+    
+    .poster {
+        height: 240px;
+        width: 170px;
+    }
+    
+    .smallPoster {
+        height: 180px;
+        width: 120px;
+    }
+    
+    .posters {
+        gap: 10px;
+    }
+}
+
+/* Mobile landscape */
 @media (max-width: 768px) {
     .row {
         margin-left: 10px;
     }
     
     .row h2 {
-        font-size: 1.5rem;
+        font-size: 1.4rem;
     }
     
     .poster {
-        max-height: 200px;
-        min-width: 160px;
+        height: 220px;
+        width: 150px;
     }
     
     .smallPoster {
-        max-height: 120px;
-        min-width: 100px;
+        height: 160px;
+        width: 110px;
+    }
+    
+    .posters {
+        gap: 8px;
+        padding: 15px 0;
     }
     
     .scroll-btn {
@@ -143,22 +174,55 @@
     }
 }
 
+/* Mobile portrait */
 @media (max-width: 480px) {
+    .row {
+        margin-left: 8px;
+    }
+    
+    .row h2 {
+        font-size: 1.2rem;
+        margin-bottom: 12px;
+    }
+    
+    .poster {
+        height: 200px;
+        width: 135px;
+    }
+    
+    .smallPoster {
+        height: 140px;
+        width: 95px;
+    }
+    
+    .posters {
+        gap: 6px;
+        padding: 12px 0;
+    }
+    
+    .scroll-btn {
+        width: 30px;
+        height: 30px;
+    }
+}
+
+/* Small mobile devices */
+@media (max-width: 360px) {
     .row {
         margin-left: 5px;
     }
     
     .poster {
-        max-height: 180px;
-        min-width: 140px;
+        height: 180px;
+        width: 120px;
     }
     
     .smallPoster {
-        max-height: 100px;
-        min-width: 80px;
+        height: 120px;
+        width: 85px;
     }
     
     .posters {
-        gap: 8px;
+        gap: 5px;
     }
 }
