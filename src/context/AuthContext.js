@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { supabase } from '../lib/supabase';
 
 const AuthContext = createContext();
 
@@ -15,60 +16,134 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check if user is logged in on app start
-    const savedUser = localStorage.getItem('netflixUser');
-    if (savedUser) {
-      setUser(JSON.parse(savedUser));
-    }
-    setLoading(false);
+    // Get initial session
+    const getSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session?.user) {
+        const profile = await getOrCreateProfile(session.user);
+        setUser(profile);
+      }
+      setLoading(false);
+    };
+
+    getSession();
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      async (event, session) => {
+        if (session?.user) {
+          const profile = await getOrCreateProfile(session.user);
+          setUser(profile);
+        } else {
+          setUser(null);
+        }
+        setLoading(false);
+      }
+    );
+
+    return () => subscription.unsubscribe();
   }, []);
 
-  const login = async (email, password) => {
-    // Simulate API call
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        // Simple validation for demo
-        if (email && password.length >= 6) {
-          const userData = {
-            id: Date.now(),
-            email,
-            name: email.split('@')[0],
-            createdAt: new Date().toISOString()
-          };
-          setUser(userData);
-          localStorage.setItem('netflixUser', JSON.stringify(userData));
-          resolve(userData);
-        } else {
-          reject(new Error('Invalid credentials'));
+  const getOrCreateProfile = async (authUser) => {
+    try {
+      // Check if profile exists
+      let { data: profile, error } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', authUser.id)
+        .single();
+
+      if (error && error.code === 'PGRST116') {
+        // Profile doesn't exist, create one
+        const newProfile = {
+          id: authUser.id,
+          email: authUser.email,
+          name: authUser.user_metadata?.name || authUser.email.split('@')[0],
+          avatar_url: authUser.user_metadata?.avatar_url || null,
+          created_at: new Date().toISOString()
+        };
+
+        const { data: createdProfile, error: createError } = await supabase
+          .from('profiles')
+          .insert([newProfile])
+          .select()
+          .single();
+
+        if (createError) {
+          console.error('Error creating profile:', createError);
+          return authUser;
         }
-      }, 1000);
+
+        return createdProfile;
+      }
+
+      if (error) {
+        console.error('Error fetching profile:', error);
+        return authUser;
+      }
+
+      return profile;
+    } catch (err) {
+      console.error('Error in getOrCreateProfile:', err);
+      return authUser;
+    }
+  };
+
+  const login = async (email, password) => {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password
     });
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    return data;
   };
 
   const signup = async (email, password, name) => {
-    // Simulate API call
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (email && password.length >= 6 && name) {
-          const userData = {
-            id: Date.now(),
-            email,
-            name,
-            createdAt: new Date().toISOString()
-          };
-          setUser(userData);
-          localStorage.setItem('netflixUser', JSON.stringify(userData));
-          resolve(userData);
-        } else {
-          reject(new Error('Please fill all fields correctly'));
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          name: name
         }
-      }, 1000);
+      }
     });
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    return data;
   };
 
-  const logout = () => {
+  const logout = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      console.error('Error logging out:', error);
+    }
     setUser(null);
-    localStorage.removeItem('netflixUser');
+  };
+
+  const updateProfile = async (updates) => {
+    if (!user) return;
+
+    const { data, error } = await supabase
+      .from('profiles')
+      .update(updates)
+      .eq('id', user.id)
+      .select()
+      .single();
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    setUser(data);
+    return data;
   };
 
   const value = {
@@ -76,6 +151,7 @@ export const AuthProvider = ({ children }) => {
     login,
     signup,
     logout,
+    updateProfile,
     loading
   };
 
