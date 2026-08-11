@@ -2,7 +2,7 @@ import React,{useEffect,useState} from 'react'
 import axios from '../../Axios'
 import './RowPost.css'
 import YouTube from 'react-youtube'
-import {API_KEY, imageUrl} from '../../Constants/Constants'
+import {API_KEY} from '../../Constants/Constants'
 import MovieCard from '../MovieCard/MovieCard'
 import { useViewingHistory } from '../../context/ViewingHistoryContext'
 

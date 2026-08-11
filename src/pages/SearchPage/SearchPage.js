@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from '../../Axios';
 import { API_KEY } from '../../Constants/Constants';
 import MovieCard from '../../Components/MovieCard/MovieCard';
@@ -12,19 +12,7 @@ function SearchPage() {
   const [urlId, setUrlId] = useState('');
   const [searchType, setSearchType] = useState('multi');
 
-  useEffect(() => {
-    if (searchQuery.trim()) {
-      const delayedSearch = setTimeout(() => {
-        performSearch();
-      }, 500);
-
-      return () => clearTimeout(delayedSearch);
-    } else {
-      setSearchResults([]);
-    }
-  }, [searchQuery, searchType]);
-
-  const performSearch = async () => {
+  const performSearch = useCallback(async () => {
     setLoading(true);
     try {
       const response = await axios.get(
@@ -37,7 +25,19 @@ function SearchPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [searchQuery, searchType]);
+
+  useEffect(() => {
+    if (searchQuery.trim()) {
+      const delayedSearch = setTimeout(() => {
+        performSearch();
+      }, 500);
+
+      return () => clearTimeout(delayedSearch);
+    } else {
+      setSearchResults([]);
+    }
+  }, [searchQuery, performSearch]);
 
   const handleMovie = (id, mediaType = 'movie') => {
     const endpoint = mediaType === 'tv' ? 'tv' : 'movie';

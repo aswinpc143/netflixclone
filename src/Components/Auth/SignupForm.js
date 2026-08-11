@@ -110,8 +110,8 @@ function SignupForm() {
       <div className="auth-terms">
         <p>
           By signing up, you agree to our 
-          <a href="#"> Terms of Service</a> and 
-          <a href="#"> Privacy Policy</a>
+          <a href="https://help.netflix.com/legal/termsofuse"> Terms of Service</a> and
+          <a href="https://help.netflix.com/legal/privacy"> Privacy Policy</a>
         </p>
       </div>
     </div>

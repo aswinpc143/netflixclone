@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { useAuth } from './AuthContext';
 import { supabase } from '../lib/supabase';
 
@@ -17,15 +17,7 @@ export const MyListProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const { user } = useAuth();
 
-  useEffect(() => {
-    if (user) {
-      fetchMyList();
-    } else {
-      setMyList([]);
-    }
-  }, [user]);
-
-  const fetchMyList = async () => {
+  const fetchMyList = useCallback(async () => {
     if (!user) return;
 
     setLoading(true);
@@ -47,7 +39,15 @@ export const MyListProvider = ({ children }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [user]);
+
+  useEffect(() => {
+    if (user) {
+      fetchMyList();
+    } else {
+      setMyList([]);
+    }
+  }, [user, fetchMyList]);
 
   const addToMyList = async (movie) => {
     if (!user) return;
