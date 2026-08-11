@@ -6,25 +6,25 @@ import MovieCard from '../../Components/MovieCard/MovieCard';
 import YouTube from 'react-youtube';
 import './GenrePage.css';
 
+const genreNames = {
+  28: 'Action',
+  35: 'Comedy',
+  27: 'Horror',
+  10749: 'Romance',
+  99: 'Documentary',
+  18: 'Drama',
+  878: 'Science Fiction',
+  53: 'Thriller',
+  16: 'Animation',
+  10751: 'Family'
+};
+
 function GenrePage() {
   const { genreId } = useParams();
   const [movies, setMovies] = useState([]);
   const [genreName, setGenreName] = useState('');
   const [loading, setLoading] = useState(true);
   const [urlId, setUrlId] = useState('');
-
-  const genreNames = {
-    28: 'Action',
-    35: 'Comedy',
-    27: 'Horror',
-    10749: 'Romance',
-    99: 'Documentary',
-    18: 'Drama',
-    878: 'Science Fiction',
-    53: 'Thriller',
-    16: 'Animation',
-    10751: 'Family'
-  };
 
   useEffect(() => {
     setLoading(true);

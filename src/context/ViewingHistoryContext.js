@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { useAuth } from './AuthContext';
 import { supabase } from '../lib/supabase';
 
@@ -17,15 +17,7 @@ export const ViewingHistoryProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const { user } = useAuth();
 
-  useEffect(() => {
-    if (user) {
-      fetchViewingHistory();
-    } else {
-      setViewingHistory([]);
-    }
-  }, [user]);
-
-  const fetchViewingHistory = async () => {
+  const fetchViewingHistory = useCallback(async () => {
     if (!user) return;
 
     setLoading(true);
@@ -48,7 +40,15 @@ export const ViewingHistoryProvider = ({ children }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [user]);
+
+  useEffect(() => {
+    if (user) {
+      fetchViewingHistory();
+    } else {
+      setViewingHistory([]);
+    }
+  }, [user, fetchViewingHistory]);
 
   const addToHistory = async (movie, progress = 0) => {
     if (!user) return;
